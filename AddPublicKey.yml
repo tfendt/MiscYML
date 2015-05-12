@@ -1,0 +1,8 @@
+#Usage ansible-playbook -k AddPublicKey.ryml --extra-vars "hosts=[Enter Value Here] remoteUser=[RUser] localUser=[LUser]"
+---
+- hosts: '{{ hosts }}'
+  gather_facts: no
+  tasks:
+
+  - name: add public key to authorized_key file of root
+    authorized_key: user='{{ remoteUser }}' state=present key="{{ lookup('file', '/home/'{{ localUser }}'/.ssh/id_rsa.pub') }}"
